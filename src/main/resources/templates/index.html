@@ -15,7 +15,8 @@
     </div>
 </div>
 <br/>
-<div class="container jumbotron" th:if="${search}!=null" th:inline="text">You searched for [[${search}]]:</div>
+<div class="container jumbotron" th:if="${search}!=null"
+     th:inline="text">You searched for [[${search}]]:</div>
 <div class="container" th:each="dish : ${dishes}">
     <div class="jumbotron">
         <ul class="list-group">
@@ -26,11 +27,19 @@
             </li>
         </ul>
         <br/><br/>
-        <a class="like" th:href="@{/like/{id}(id=${dish.id})}"><i class="fa fa-thumbs-o-up"></i>
-            <input class="qty1" name="qty1" readonly="readonly" type="text" th:value="${dish.likeCounter}" />
+        <a class="like" th:href="@{/like/{id}(id=${dish.id})}">
+            <i class="fa fa-thumbs-o-up"></i>
+            <input class="qty1" name="qty1" readonly="readonly"
+                   type="text" th:value="${dish.likeCounter}" />
         </a>
-        <a class="dislike" th:href="@{/dislike/{id}(id=${dish.id})}"><i class="fa fa-thumbs-o-down"></i>
-            <input class="qty2"  name="qty2" readonly="readonly" type="text" th:value="${dish.dislikeCounter}" />
+        <a class="dislike" th:href="@{/dislike/{id}(id=${dish.id})}">
+            <i class="fa fa-thumbs-o-down"></i>
+            <input class="qty2"  name="qty2" readonly="readonly"
+                   type="text" th:value="${dish.dislikeCounter}" />
+        </a>
+        <a class="tasty-nasty">
+            <h3 th:if="${dish.likeCounter} > ${dish.dislikeCounter}" align="center">Tasty!</h3>
+            <h3 th:if="${dish.dislikeCounter} > ${dish.likeCounter}" align="center">Nasty!</h3>
         </a>
         <br/><br/>
         <a th:href="@{/update/{id}(id=${dish.id})}" role="button">
