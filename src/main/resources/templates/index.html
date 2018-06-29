@@ -23,7 +23,10 @@
             <li class="list-group-item"><span th:text="${dish.name}"></span></a></li>
             <li class="list-group-item"><span th:text="${dish.description}"></span></li>
             <li class="list-group-item image-wrapper"  th:if="${dish.imageAddress} != null">
-                <img id="dish-image" th:src="${dish.imageAddress}"/></a>
+                <img class="dish-image" th:src="${dish.imageAddress}"/></a>
+            </li>
+            <li class="list-group-item image-wrapper"  th:if="${dish.imageCloudinary} != null">
+                <img class="dish-image" th:src="${dish.imageCloudinary}"/></a>
             </li>
         </ul>
         <br/><br/>

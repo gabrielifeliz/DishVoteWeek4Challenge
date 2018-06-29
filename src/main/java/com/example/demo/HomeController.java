@@ -1,20 +1,28 @@
 package com.example.demo;
 
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 @Controller
 public class HomeController {
+
     @Autowired
     DishRepository dishRepository;
+
+    @Autowired
+    CloudinaryConfig cloudc;
 
     @RequestMapping("/")
     public String displayHome(Model model) {
@@ -29,13 +37,31 @@ public class HomeController {
     }
 
     @PostMapping("/process")
-    public String processForm(@Valid @ModelAttribute("dish") Dish dish, BindingResult result) {
+    public String processForm(@Valid @ModelAttribute("dish") Dish dish,
+                              BindingResult result,
+                              @RequestParam("file")MultipartFile file) {
         if (result.hasErrors()) {
             return "newdish";
         }
 
-        dish.setPublicationDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMMM dd, yyyy HH:mm:ss")));
-        dishRepository.save(dish);
+        if (file.isEmpty()) {
+            dish.setPublicationDate(LocalDateTime.now()
+                    .format(DateTimeFormatter.ofPattern("MMMM dd, yyyy HH:mm:ss")));
+            dishRepository.save(dish);
+            return "redirect:/";
+        }
+
+        try {
+            Map uploadResult = cloudc.upload(file.getBytes(),
+                    ObjectUtils.asMap("resourcetype", "auto"));
+            dish.setImageCloudinary(uploadResult.get("url").toString());
+            dish.setPublicationDate(LocalDateTime.now()
+                    .format(DateTimeFormatter.ofPattern("MMMM dd, yyyy HH:mm:ss")));
+            dishRepository.save(dish);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "redirect:/newdish";
+        }
         return "redirect:/";
     }
 

@@ -24,7 +24,7 @@ label {
     font-weight: bold;
 }
 
-#dish-image {
+.dish-image {
     width: 100%;
     /* Images default to being inline, inline items cannot have a width, so change to block: */
     display: block;
