@@ -24,7 +24,9 @@ public class Dish {
 
     private String publicationDate;
 
-    private String image;
+    private String imageAddress;
+
+    private String imageCloudinary;
 
     private int likeCounter = 0;
 
@@ -62,12 +64,20 @@ public class Dish {
         this.publicationDate = publicationDate;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageAddress() {
+        return imageAddress;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageAddress(String imageAddress) {
+        this.imageAddress = imageAddress;
+    }
+
+    public String getImageCloudinary() {
+        return imageCloudinary;
+    }
+
+    public void setImageCloudinary(String imageCloudinary) {
+        this.imageCloudinary = imageCloudinary;
     }
 
     public int getLikeCounter() {
@@ -93,7 +103,7 @@ public class Dish {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", publicationDate='" + publicationDate + '\'' +
-                ", image='" + image + '\'' +
+                ", imageAddress='" + imageAddress + '\'' +
                 '}';
     }
 }
