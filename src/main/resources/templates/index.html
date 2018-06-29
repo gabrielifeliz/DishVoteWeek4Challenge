@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:replace="base :: csslinks"> </th:block>
+    <title>Dish List - Home Page</title>
+</head>
+
+<body>
+<nav th:replace="base :: navbar"></nav>
+
+<div class="jumbotron jumbotron-fluid text-center">
+    <div class="jumbotron text-sm-center">
+        <h1 class = "display-1">Vote Tasty or Nasty for Dishes!</h1><br/><br/>
+    </div>
+</div>
+<br/>
+<div class="container jumbotron" th:if="${search}!=null" th:inline="text">You searched for [[${search}]]:</div>
+<div class="container" th:each="dish : ${dishes}">
+    <div class="jumbotron">
+        <ul class="list-group">
+            <li class="list-group-item"><span th:text="${dish.name}"></span></a></li>
+            <li class="list-group-item"><span th:text="${dish.description}"></span></li>
+            <li class="list-group-item image-wrapper"  th:if="${dish.image} != null">
+                <img id="dish-image" th:src="${dish.image}"/></a>
+            </li>
+        </ul>
+        <br/><br/>
+        <a class="like" th:href="@{/like/{id}(id=${dish.id})}"><i class="fa fa-thumbs-o-up"></i>
+            <input class="qty1" name="qty1" readonly="readonly" type="text" th:value="${dish.likeCounter}" />
+        </a>
+        <a class="dislike" th:href="@{/dislike/{id}(id=${dish.id})}"><i class="fa fa-thumbs-o-down"></i>
+            <input class="qty2"  name="qty2" readonly="readonly" type="text" th:value="${dish.dislikeCounter}" />
+        </a>
+        <br/><br/>
+        <a th:href="@{/update/{id}(id=${dish.id})}" role="button">
+            <button class="btn btn-info btn-lg">Update</button></a><br /><br />
+
+        <a th:href="@{/delete/{id}(id=${dish.id})}" role="button">
+            <button class="btn btn-info btn-lg">Delete</button></a><br /><br />
+    </div>
+</div>
+<th:block th:replace="base :: jslinks"></th:block>
+</body>
+</html>
