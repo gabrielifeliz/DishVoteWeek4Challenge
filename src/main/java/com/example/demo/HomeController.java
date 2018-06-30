@@ -45,10 +45,10 @@ public class HomeController {
         }
 
         if (file.isEmpty()) {
-            /*dish.setPublicationDate(LocalDateTime.now()
+            dish.setPublicationDate(LocalDateTime.now()
                     .format(DateTimeFormatter.ofPattern("MMMM dd, yyyy HH:mm:ss")));
-            dishRepository.save(dish);*/
-            return "redirect:/newdish";
+            dishRepository.save(dish);
+            return "redirect:/";
         }
 
         try {
